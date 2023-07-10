@@ -12,7 +12,7 @@ SO THAT I don't have to pay a graphic designer
 https://github.com/secretariuss/svg-generator
 
 ## Video reference
-https://drive.google.com/file/d/1CWyz3kvqFLQC6N8s9xRvPPnEwNkSLLsm/view
+https://drive.google.com/file/d/1J9KUJMYpGvnEW2KhM0OwYc_a7cvNl7jm/view
 
 ## Screen shots
 
