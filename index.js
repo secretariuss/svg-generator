@@ -1,35 +1,11 @@
 const inquirer = require('inquirer');
 const fs = require("fs");
-const { Triangle, Square, Circle } = require("./lib/shapes");
+const {Triangle, Square, Circle} = require("./lib/shapes");
+const fileName = "./examples/logo.svg";
 
-function writeToFile(nameFile, reply) {
-  let svg = "";
-  svg =
-    '<svg width="300" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg">';
-  svg += "<g>";
-  svg += `${reply.shape}`;
-
-  let shape;
-  if (reply.shape === "Triangle") {
-    shape = new Triangle();
-    svg += `<polygon points="150, 18 244, 182 56, 182" fill="${reply.shapeColor}"/>`;
-  } else if (reply.shape === "Square") {
-    shape = new Square();
-    svg += `<rect x="73" y="40" width="160" height="160" fill="${reply.shapeColor}"/>`;
-  } else {
-    shape = new Circle();
-    svg += `<circle cx="150" cy="115" r="80" fill="${reply.shapeColor}"/>`;
-  }
-
-  svg += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${reply.textColor}">${reply.text}</text>`;
-
-  svg += "</g>";
-
-  svg += "</svg>";
-
-  fs.writeFile(nameFile, svg, (err) => {
-    err ? console.log(err) : console.log("Generated logo.svg");
-  });
+function createLogo(reply) {
+  const svg = writeToFile(reply);
+  fs.writeFile(fileName, svg, () => console.log('Generated logo.svg'));
 }
 
 function userChoises() {
@@ -38,7 +14,7 @@ function userChoises() {
 
       {
         name: 'text',
-        message: 'What text would you like you logo to display?',
+        message: 'What text would you like you logo to display? (three character maximum)',
         type: 'input'
       },
       {
@@ -54,17 +30,32 @@ function userChoises() {
       },
       {
         name: 'shapeColor',
-        message: 'Choose shapes color?',
+        message: 'Choose shapes color? (OR a hexadecimal number)',
         type: 'input'
       },
     ])
-};
-
-async function init() {
-  let reply = await userChoises();
-  writeToFile("logo.svg", reply);
+    .then((reply) => {
+      createLogo(reply);
+    })
+    .catch(err => {
+      console.log(err)
+    });
 }
 
-init();
+function writeToFile(reply) {
+  if (reply.shape === 'Circle') {
+    let userShape = new Circle(reply.shapeColor, reply.text, reply.textColor)
+    return userShape.render()
+  }
 
-module.exports = userChoises;
+  if (reply.shape === 'Square') {
+    let userShape = new Square(reply.shapeColor, reply.text, reply.textColor)
+    return userShape.render()
+  }
+  if (reply.shape === "Triangle") {
+    let userShape = new Triangle(reply.shapeColor, reply.text, reply.textColor)
+    return userShape.render()
+  }
+}
+
+userChoises();

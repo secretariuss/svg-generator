@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest"
   },
-  "author": "",
+  "author": "secretariuss",
   "license": "ISC",
   "dependencies": {
     "inquirer": "^6.3.1"
